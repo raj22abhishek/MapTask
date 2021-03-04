@@ -1,0 +1,63 @@
+
+<nav class="navbar navbar-light" style="background-color: #074770;height: 150px;">
+    <form class="form-inline" [formGroup]="form">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2"><label>Location Name</label></div>
+                <div class="col-md-1"><input type="text" class="form-control"
+                    formControlName="Name"></div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-2"><label>Enter Latitude</label></div>
+                
+                <div class="col-md-1"><input type="text" class="form-control"
+                    formControlName="latitude"></div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-2"><label for="searchField">Enter Longitude</label></div>
+                <div class="col-md-1"><input type="text" class="form-control" id="searchField"
+                    formControlName="longitude"></div>
+            </div>
+            
+        </div>
+    </form>
+    <div class="row"><button class="buttonStyle" (click)="submit()">Submit</button></div>
+  </nav>
+
+<div class="container-fluid">
+<div class="row d-flex flex-center">
+    
+    <div class="col-md-6 my-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Latitude</th>
+                  <th scope="col">Longitude</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let users of tableData">
+                    <th>{{tableData.length}}</th>
+                    <th scope="row">{{users.Name}}</th>
+                    <td>{{users.latitude}}</td>
+                    <td>{{users.longitude}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="text-align: center;"><button class="showRoute" [disabled]="tableData.length == 0" (click)="showRoute()">Show Route</button></div>
+    </div>
+    
+    <div class="col-md-6">
+    <agm-map #map [mapTypeId]="'terrain'" [latitude]="location.lat" [longitude]="location.lng" style="height: 500px">
+        <div *ngIf="!clicked"><agm-marker [latitude]="location.lat" [longitude]="location.lng"></agm-marker></div>
+        <div *ngIf="clicked"><agm-marker  *ngFor="let data of dummyData; let i = index" [agmFitBounds]="true" [latitude]="data.latitude" [longitude]="data.longitude">
+        </agm-marker></div>
+        
+    </agm-map>
+    </div>
+</div>
+</div>
